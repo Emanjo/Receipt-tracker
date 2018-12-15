@@ -9,6 +9,8 @@ router.get('/', async (req, res) => {
 	res.send(await posts.find({}).toArray());
 });
 
+console.log(process.env.MONGO_DB)
+
 //Add posts
 router.post('/', async (req, res) => {
 	const posts = await loadPostsCollection();
@@ -30,11 +32,11 @@ router.delete('/:id', async (req, res) => {
 
 async function loadPostsCollection() {
 	const client = await mongodb.MongoClient
-		.connect('mongodb://USERNAME:PASSWORD@ds123946.mlab.com:23946/test-project', {
+		.connect(process.env.MONGO_DB_URI, {
 			useNewUrlParser: true
 		});
 
-	return client.db('test-project').collection('posts');
+	return client.db(process.env.MONGO_DB).collection('posts');
 };
 
 module.exports = router;
