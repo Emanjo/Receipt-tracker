@@ -1,0 +1,29 @@
+{
+	"name": "vueexpressmongodb",
+	"version": "1.0.0",
+	"description": "A test-project with Vue, Express and mongodb",
+	"main": "index.js",
+	"scripts": {
+		"start": "node server/index.js",
+		"dev": "nodemon server/index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Emanjo/JavaScript-Full-Stack-Test.git"
+	},
+	"author": "Emil André Johannessen",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/Emanjo/JavaScript-Full-Stack-Test/issues"
+	},
+	"homepage": "https://github.com/Emanjo/JavaScript-Full-Stack-Test#readme",
+	"dependencies": {
+		"body-parser": "^1.18.3",
+		"cors": "^2.8.5",
+		"express": "^4.16.4",
+		"mongodb": "^3.1.10"
+	},
+	"devDependencies": {
+		"nodemon": "^1.18.8"
+	}
+}
