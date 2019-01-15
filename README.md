@@ -19,4 +19,4 @@ I want to use this base to make an application for storing books.
 
 ***
 
-## [DEMO](https://js-fullstack.herokuapp.com/)
+## ~[DEMO](https://js-fullstack.herokuapp.com/)~
