@@ -1,19 +1,28 @@
 <template>
   <div id="app">
     <div class="nav">
-asdas
+      <div class="logo">
+        <h1>Receipt tracker</h1>
+      </div>
+      <div class="container">
+        <main-nav class="main-nav"/>
+      </div>
     </div>
     <div class="content">
-      asdas
+      <div class="container">
+        <h1>Welcome!</h1>
+      </div>
     </div>
-
   </div>
 </template>
 
 <script>
+import MainNav from './components/MainNav.vue';
+
 export default {
   name: 'app',
   components: {
+    MainNav
   }
 }
 </script>
@@ -34,15 +43,25 @@ html {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  color: #8080B3;
   min-height: 100vh;
   display: flex;
   flex-direction: row;
   .nav {
-  width: 200px;
-  background-color: lightblue;
+    background-color: #343477;
+    .logo {
+      background: #8080B3;
+      padding: 1em;
+      h1 {
+        color: #1B1B5A;
+      }
+    }
   }
   .content {
   }
+}
+
+.container {
+  margin: 1em;
 }
 </style>
