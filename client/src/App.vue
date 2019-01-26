@@ -1,23 +1,26 @@
 <template>
   <div id="app">
-    <PostComponent/>
+    <div class="nav">
+asdas
+    </div>
+    <div class="content">
+      asdas
+    </div>
+
   </div>
 </template>
 
 <script>
-import PostComponent from './components/PostComponent.vue'
-
 export default {
   name: 'app',
   components: {
-    PostComponent
   }
 }
 </script>
 
 <style lang="scss">
 
-@import 'assets/reset';
+@import 'styles/reset';
 
 * {
   box-sizing: border-box;
@@ -33,6 +36,13 @@ html {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   min-height: 100vh;
-  padding: 30px;
+  display: flex;
+  flex-direction: row;
+  .nav {
+  width: 200px;
+  background-color: lightblue;
+  }
+  .content {
+  }
 }
 </style>
