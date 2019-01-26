@@ -2,10 +2,10 @@
 	<div id="main-nav">
 			<nav>
 					<div class="table">
-							<a class="table-row" href="#">
-								<div class="table-cell --table-cell-center"><font-awesome-icon icon="tachometer-alt" /></div>
-								<div class="table-cell">Overview</div>
-							</a>
+						<a class="table-row" href="#">
+							<div class="table-cell --table-cell-center"><font-awesome-icon icon="tachometer-alt" /></div>
+							<div class="table-cell">Overview</div>
+						</a>
 						<a class="table-row" href="#">
 							<div class="table-cell --table-cell-center"><font-awesome-icon icon="receipt" /></div>
 							<div class="table-cell">New reciept</div>
@@ -14,9 +14,9 @@
 							<div class="table-cell --table-cell-center"><font-awesome-icon icon="chart-line" /></div>
 							<div class="table-cell">Statistics</div>
 						</a>
-					</div>
-			</nav>
-		</div>
+				</div>
+		</nav>
+	</div>
 </template>
 
 <script>
@@ -30,11 +30,7 @@
 #main-nav {
 	text-align: left;
 	width: 100%;
-	word-break: break-all;
-}
-
-.logo {
-	background: #565695;
+	word-break: break-word;
 }
 
 nav {

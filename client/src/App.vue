@@ -9,21 +9,28 @@
       </div>
     </div>
     <div class="content">
-      <div class="container">
-        <h1>Welcome!</h1>
-      </div>
+        <Overview v-if="isOverview" />
     </div>
   </div>
 </template>
 
 <script>
 import MainNav from './components/MainNav.vue';
+import Overview from './components/Overview.vue';
 
 export default {
   name: 'app',
   components: {
-    MainNav
-  }
+    MainNav,
+    Overview
+  },
+  data() {
+    return {
+      isOverview: true,
+      isNewReciept: false,
+      isStatistics: false,
+    }
+  },
 }
 </script>
 
@@ -46,7 +53,6 @@ html {
   color: #8080B3;
   min-height: 100vh;
   display: flex;
-  flex-direction: row;
   .nav {
     background-color: #343477;
     .logo {
@@ -58,10 +64,12 @@ html {
     }
   }
   .content {
+    width: 100%;
   }
 }
 
 .container {
+  overflow: hidden;
   margin: 1em;
 }
 </style>
