@@ -3,15 +3,15 @@
 			<nav>
 					<div class="table">
 							<a class="table-row" href="#">
-								<div class="table-cell"><font-awesome-icon icon="tachometer-alt" /></div>
+								<div class="table-cell --table-cell-center"><font-awesome-icon icon="tachometer-alt" /></div>
 								<div class="table-cell">Overview</div>
 							</a>
 						<a class="table-row" href="#">
-							<div class="table-cell"><font-awesome-icon icon="receipt" /></div>
-							<div class="table-cell">Reciept</div>
+							<div class="table-cell --table-cell-center"><font-awesome-icon icon="receipt" /></div>
+							<div class="table-cell">New reciept</div>
 						</a>
 						<a class="table-row" href="#">
-							<div class="table-cell"><font-awesome-icon icon="chart-line" /></div>
+							<div class="table-cell --table-cell-center"><font-awesome-icon icon="chart-line" /></div>
 							<div class="table-cell">Statistics</div>
 						</a>
 					</div>
@@ -56,6 +56,9 @@ nav {
 		.table-cell {
 			display: table-cell;
 			padding: 5px;
+			&.table-cell.--table-cell-center {
+				text-align: center;
+			}
 		}
 	}
 }
