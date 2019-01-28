@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="content">
-        <Overview v-if="isOverview" />
+      <router-view/>
     </div>
   </div>
 </template>

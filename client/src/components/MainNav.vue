@@ -2,18 +2,18 @@
 	<div id="main-nav">
 			<nav>
 					<div class="table">
-						<a class="table-row" href="#">
-							<div class="table-cell --table-cell-center"><font-awesome-icon icon="tachometer-alt" /></div>
-							<div class="table-cell">Overview</div>
-						</a>
-						<a class="table-row" href="#">
+							<router-link to="/" class="table-row">
+								<div class="table-cell --table-cell-center"><font-awesome-icon icon="tachometer-alt" /></div>
+								<div class="table-cell">Overview</div>
+							</router-link>
+						<router-link to="/new-receipt" class="table-row">
 							<div class="table-cell --table-cell-center"><font-awesome-icon icon="receipt" /></div>
 							<div class="table-cell">New reciept</div>
-						</a>
-						<a class="table-row" href="#">
+						</router-link>
+						<router-link to="/statistics" class="table-row">
 							<div class="table-cell --table-cell-center"><font-awesome-icon icon="chart-line" /></div>
 							<div class="table-cell">Statistics</div>
-						</a>
+						</router-link>
 				</div>
 		</nav>
 	</div>
