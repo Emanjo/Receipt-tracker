@@ -2,7 +2,7 @@
 	<div id="main-nav">
 			<nav>
 					<div class="table">
-							<router-link to="/" class="table-row">
+							<router-link to="/" exact class="table-row">
 								<div class="table-cell --table-cell-center"><font-awesome-icon icon="tachometer-alt" /></div>
 								<div class="table-cell">Overview</div>
 							</router-link>
@@ -43,6 +43,11 @@ nav {
 			color: white;
 		}
 	}
+}
+
+.router-link-active {
+	color: #b38082;
+	font-weight: bold;
 }
 
 .table {
