@@ -29,8 +29,8 @@
 
 #main-nav {
 	text-align: left;
-	width: 100%;
 	word-break: break-word;
+	width: 200px;
 }
 
 nav {
