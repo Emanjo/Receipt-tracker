@@ -20,6 +20,10 @@
       retailer: 'Kiwi',
       total: 465
     },
+    {
+      retailer: 'Spar',
+      total: 49
+    }
   ]
 
   export default {
@@ -27,7 +31,7 @@
       let chart = this.$refs.chart;
       let ctx = chart.getContext("2d");
       
-      barChart(ctx, 'Top retailers last 30 days', data);
+      barChart(ctx, 'Top retailers last 30 days based on total sum', data);
     }
     
   }
