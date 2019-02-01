@@ -18,13 +18,11 @@
 
 <script>
 import MainNav from './components/MainNav.vue';
-import Overview from './components/Overview.vue';
 
 export default {
   name: 'app',
   components: {
     MainNav,
-    Overview
   },
   data() {
     return {
