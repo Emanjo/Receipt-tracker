@@ -8,13 +8,26 @@
 </template>
 
 <script>
-import { lineChart } from '../helpers/createCharts';
+  import { barChart } from '../helpers/createCharts';
+
+  //Just some dummydata
+  let data = [
+    {
+      retailer: 'Rema',
+      total: 1500
+    },
+    {
+      retailer: 'Kiwi',
+      total: 465
+    },
+  ]
+
   export default {
     mounted() {
       let chart = this.$refs.chart;
       let ctx = chart.getContext("2d");
       
-      lineChart(ctx, 'Top retailers last 30 days');
+      barChart(ctx, 'Top retailers last 30 days', data);
     }
     
   }
