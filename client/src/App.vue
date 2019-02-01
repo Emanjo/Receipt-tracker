@@ -9,7 +9,9 @@
       </div>
     </div>
     <div class="content">
-      <router-view/>
+      <transition name="fade">
+        <router-view/>
+      </transition>
     </div>
   </div>
 </template>
@@ -71,5 +73,13 @@ html {
 .container {
   overflow: hidden;
   margin: 1em;
+}
+
+.fade-enter-active {
+  transition: ease-out 0.20s;
+}
+
+.fade-enter  {
+  opacity: 0;
 }
 </style>
