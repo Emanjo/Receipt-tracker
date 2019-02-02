@@ -11,8 +11,10 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const posts = require('./routes/api/posts');
+const receipts = require('./routes/api/receipts');
 
 app.use('/api/posts', posts);
+app.use('/api/receipts', receipts);
 
 // Production
 

@@ -14,7 +14,19 @@
   let data = [
     {
       retailer: 'Rema',
-      total: 1500
+      date: 129876461,
+      items: [
+        {
+          description: 'Banan',
+          count: 1,
+          pricePerItem: 16
+        },
+        {
+          description: 'Melkesjokolade',
+          count: 1,
+          pricePerItem: 43 
+        },
+      ],
     },
     {
       retailer: 'Kiwi',
