@@ -34,16 +34,15 @@
 }
 
 .square {
-	background: lightgray;
 	flex-basis: calc(50% - 40px);
-	padding: 20px;
 	margin: 20px;
 	max-height: calc(50% - 40px);
 	min-height: calc(50% - 40px);
 }
 
 .square-title {
-	text-align: center;
+	border-bottom: 1px solid #191C27;
+	padding-bottom: 15px;
 }
 
 

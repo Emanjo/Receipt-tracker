@@ -8,7 +8,7 @@
 							</router-link>
 						<router-link to="/new-receipt" class="table-row">
 							<div class="table-cell --table-cell-center"><font-awesome-icon icon="receipt" /></div>
-							<div class="table-cell">New reciept</div>
+							<div class="table-cell">New receipt</div>
 						</router-link>
 						<router-link to="/statistics" class="table-row">
 							<div class="table-cell --table-cell-center"><font-awesome-icon icon="chart-line" /></div>
@@ -35,7 +35,7 @@
 
 nav {
 	a {
-		color: #8080B3;
+		color: #929BBD;
 		display: flex;
 		align-items: center;
 		text-decoration: none;
@@ -46,7 +46,7 @@ nav {
 }
 
 .router-link-active {
-	color: #b38082;
+	color: #182143;
 	font-weight: bold;
 }
 

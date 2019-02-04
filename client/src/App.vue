@@ -40,30 +40,36 @@ html {
 }
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #8080B3;
+  color: #182143;
   min-height: 100vh;
   display: flex;
+  line-height: 1.5;
   .nav {
-    background-color: #343477;
+    background-color: #2E385E;
     .logo {
-      background: #8080B3;
+      background: #525E87;
       padding: 1em;
+      text-align: center;
+      text-transform: uppercase;
       h1 {
-        color: #1B1B5A;
+        font-size: 20px;
+        font-weight: lighter;
+        color: #929BBD;
       }
     }
   }
   .content {
     width: 100%;
+    padding: 10px 50px;
   }
 }
 
 .container {
   overflow: hidden;
-  margin: 1em;
+  margin: 1.5em;
 }
 
 .fade-enter-active {

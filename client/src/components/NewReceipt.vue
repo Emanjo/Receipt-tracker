@@ -55,10 +55,14 @@
                           count: '<input type="number">'});
       },
       removeItem() {
+        if (this.tableRowInputs.length <= 1) {
+          this.addItem();
+        }
         this.tableRowInputs.splice(-1,3);
       }
     },
     mounted() {
+      console.log(this.tableRowInputs.length);
       
     }
     
@@ -86,7 +90,6 @@
       width: 100%;
       label {
         display: block;
-        margin-bottom: 10px;
       }
       td {
         padding: 10px;
@@ -104,7 +107,8 @@
     padding: 5px;
 
     &--submit {
-      background: #00e300;
+      background: #0190019e;
+      border: 1px solid #019001;
       color: white;
       flex-basis: 70%;
     }
@@ -115,14 +119,20 @@
       color: white;
       font-weight: bold;
       font-size: 16px;
+      cursor: pointer;
+      &:active {
+        transform:scale(0.9);
+      }
     }
 
     &--minus {
-      background: red;
+      background: #a20000b8;
+      border: 1px solid #da0000;
     }
 
     &--plus {
-      background: #00e300;
+      background: #0190019e;
+      border: 1px solid #019001;
     }
   }
 
