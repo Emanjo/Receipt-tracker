@@ -49,6 +49,7 @@ html {
   line-height: 1.5;
   .nav {
     background-color: #2E385E;
+    box-shadow: 0.5px 0 1px;
     .logo {
       background: #525E87;
       padding: 1em;
