@@ -9,7 +9,6 @@ function getRandomColor() {
     return color;
 }
 
-
 export function barChart(ctx, title, data) {
   const labels = [], total = [], colors = [];
 

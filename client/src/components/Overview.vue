@@ -1,18 +1,30 @@
 <template>
     <div id="overview">
 			<div class="square">
-				<h1 class="square-title">Receipts</h1>
+				<h1 class="square__title">Receipts</h1>
+				<p>dsadsa</p>
+				<p>dsadsa</p>
+				<p>dsadsa</p>
+				<p>dsadsa</p>
+				<p>dsadsa</p>
+				<p>dsadsa</p>
+				<p>dsadsa</p>
+				<p>dsadsa</p>
+				<p>dsadsa</p>
+				<p>dsadsa</p>
+				<p>dsadsa</p>
 			</div>
 			<div class="square">
-				<h1 class="square-title">Top items</h1>
+				<h1 class="square__title">Top items</h1>
 
 			</div>
 			<div class="square">
-				<h1 class="square-title">Top retailers</h1>
+				<h1 class="square__title">Top retailers</h1>
+				<p>dsadsa</p>
 
 			</div>
 			<div class="square">
-
+				<h1 class="square__title">Last square</h1>
 			</div>
     </div>
 </template>
@@ -25,25 +37,7 @@
 
 <style scoped lang="scss">
 
-#overview {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	align-items: stretch;
-	height: 100%;
-}
 
-.square {
-	flex-basis: calc(50% - 40px);
-	margin: 20px;
-	max-height: calc(50% - 40px);
-	min-height: calc(50% - 40px);
-}
-
-.square-title {
-	border-bottom: 1px solid #191C27;
-	padding-bottom: 15px;
-}
 
 
 </style>

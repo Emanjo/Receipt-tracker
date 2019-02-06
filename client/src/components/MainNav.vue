@@ -1,7 +1,6 @@
 <template>
-	<div id="main-nav">
-			<nav>
-					<div class="table">
+	<div id="main-nav" class="navbar navbar-expand-lg navbar-light bg-light">
+		<router-link to="/" class="navbar-brand">Receipt Tracker</router-link>
 							<router-link to="/" exact class="table-row">
 								<div class="table-cell --table-cell-center"><font-awesome-icon icon="tachometer-alt" /></div>
 								<div class="table-cell">Overview</div>
@@ -14,8 +13,6 @@
 							<div class="table-cell --table-cell-center"><font-awesome-icon icon="chart-line" /></div>
 							<div class="table-cell">Statistics</div>
 						</router-link>
-				</div>
-		</nav>
 	</div>
 </template>
 
@@ -27,41 +24,6 @@
 
 <style scoped lang="scss">
 
-#main-nav {
-	text-align: left;
-	word-break: break-word;
-	width: 200px;
-}
 
-nav {
-	a {
-		color: #929BBD;
-		display: flex;
-		align-items: center;
-		text-decoration: none;
-		&:hover {
-			color: white;
-		}
-	}
-}
-
-.router-link-active {
-	color: #182143;
-	font-weight: bold;
-}
-
-.table {
-	display: table;
-	.table-row {
-		display: table-row;
-		.table-cell {
-			display: table-cell;
-			padding: 5px;
-			&.table-cell.--table-cell-center {
-				text-align: center;
-			}
-		}
-	}
-}
 
 </style>

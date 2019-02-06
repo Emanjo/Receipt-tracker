@@ -7,6 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Overview from './components/Overview.vue'
 import NewReceipt from './components/NewReceipt.vue'
 import Statistics from './components/Statistics.vue'
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 const routes = [
   { path: '/', component: Overview },
@@ -20,7 +23,7 @@ const router = new VueRouter({
   routes
 })
 
-Vue.use(VueRouter)
+Vue.use(VueRouter, BootstrapVue)
 
 library.add(faTachometerAlt, faReceipt, faChartLine)
 
