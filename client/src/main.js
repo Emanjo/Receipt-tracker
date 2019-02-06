@@ -1,37 +1,14 @@
-import Vue from 'vue'
-import App from './App.vue'
-import VueRouter from 'vue-router'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faTachometerAlt, faReceipt, faChartLine } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import Overview from './components/Overview.vue'
-import NewReceipt from './components/NewReceipt.vue'
-import Statistics from './components/Statistics.vue'
-import BootstrapVue from 'bootstrap-vue'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+import Vue from "vue";
+import App from "./App";
+import router from "./router/index";
 
-const routes = [
-  { path: '/', component: Overview },
-  { path: '/new-receipt', component: NewReceipt },
-  { path: '/statistics', component: Statistics }
+import BlackDashboard from "./plugins/blackDashboard";
+import i18n from "./i18n"
+Vue.use(BlackDashboard);
 
-]
-
-const router = new VueRouter({
-  mode: 'history',
-  routes
-})
-
-Vue.use(VueRouter, BootstrapVue)
-
-library.add(faTachometerAlt, faReceipt, faChartLine)
-
-Vue.component('font-awesome-icon', FontAwesomeIcon)
-
-Vue.config.productionTip = false
-
+/* eslint-disable no-new */
 new Vue({
-  render: h => h(App),
-  router
-}).$mount('#app')
+  router,
+  i18n,
+  render: h => h(App)
+}).$mount("#app");

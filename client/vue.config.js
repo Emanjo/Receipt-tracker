@@ -1,20 +1,16 @@
-const path = require('path');
-
 module.exports = {
-    outputDir: path.resolve(__dirname, '../server/public'),
-    devServer: {
-		proxy: {
-			'api': {
-				target: 'http://localhost:5000'
-			}
-		}
-	},
+  lintOnSave: false,
+
   pluginOptions: {
-    'style-resources-loader': {
-      preProcessor: 'scss',
-      patterns: [
-        path.resolve(__dirname, 'src/styles/imports.scss')
-      ]
+    i18n: {
+      locale: 'en',
+      fallbackLocale: 'en',
+      localeDir: 'locales',
+      enableInSFC: false
     }
+  },
+  css: {
+    // Enable CSS source maps.
+    sourceMap: true
   }
-}
+};
