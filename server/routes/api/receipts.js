@@ -5,8 +5,25 @@ const router = express.Router();
 
 //Get receipts
 router.get('/', async (req, res) => {
-	const receipts = await loadReceiptsCollection();
-	res.send(await receipts.find({}).toArray());
+	const receipts = await loadReceiptsCollection(), receiptsData = await receipts.find({}).toArray();
+	let receiptsMeta = {}, receiptSums = [];
+	const reducer = (acc, curr) => acc + curr;
+
+	//Calculate total price of each receipt
+	receiptsData.forEach( element => {
+		let itemPrices = [];
+		element["items"].forEach( itemPrice => itemPrices.push(itemPrice["pricePerItem"] * itemPrice["count"]));
+
+		//Adds the "sum" key
+		element["sum"] = itemPrices.reduce(reducer);
+
+		receiptSums.push(element["sum"]);
+	});
+
+	//Calculates total sum of all receipt sums combined
+	receiptsMeta["totalSum"] = receiptSums.reduce(reducer);
+
+	res.send({ data: receiptsData, meta: receiptsMeta });
 });
 
 console.log(process.env.MONGO_DB)
