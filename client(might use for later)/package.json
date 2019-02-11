@@ -1,0 +1,43 @@
+{
+  "name": "vue-black-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "vue-cli-service build",
+    "e2e": "node test/e2e/runner.js",
+    "lint": "vue-cli-service lint",
+    "lint-fix": "vue-cli-service lint --fix",
+    "dev": "vue-cli-service serve --open",
+    "serve": "vue-cli-service serve --open"
+  },
+  "dependencies": {
+    "chart.js": "^2.7.2",
+    "es6-promise": "^4.2.4",
+    "vue": "^2.5.17",
+    "vue-chartjs": "^3.4.0",
+    "vue-i18n": "^8.0.0",
+    "vue-router": "^3.0.1",
+    "vue2-transitions": "^0.2.3"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.2.0",
+    "@vue/cli-plugin-eslint": "^3.2.1",
+    "@vue/cli-service": "^3.2.0",
+    "@vue/eslint-config-prettier": "^4.0.1",
+    "node-sass": "^4.10.0",
+    "sass-loader": "^7.1.0",
+    "vue-cli-plugin-i18n": "^0.5.0",
+    "vue-template-compiler": "^2.5.17"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "description": "A sample admin dashboard based on paper dashboard UI template",
+  "author": "cristian.jora <joracristi@gmail.com>",
+  "engines": {
+    "node": ">= 8.1.4",
+    "npm": ">= 5.0.0"
+  }
+}

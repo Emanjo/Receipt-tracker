@@ -1,14 +1,38 @@
-import Vue from "vue";
-import App from "./App";
-import router from "./router/index";
+import Vue from 'vue'
+import App from './App.vue'
+import VueRouter from 'vue-router'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faTachometerAlt, faReceipt, faChartLine } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import Overview from './components/Overview.vue'
+import NewReceipt from './components/NewReceipt.vue'
+import Statistics from './components/Statistics.vue'
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap'
 
-import BlackDashboard from "./plugins/blackDashboard";
-import i18n from "./i18n"
-Vue.use(BlackDashboard);
+const routes = [
+  { path: '/', component: Overview },
+  { path: '/new-receipt', component: NewReceipt },
+  { path: '/statistics', component: Statistics }
+]
 
-/* eslint-disable no-new */
+const router = new VueRouter({
+  mode: 'history',
+  linkActiveClass: "nav-item active",
+  routes
+})
+
+Vue.use(VueRouter, BootstrapVue)
+
+library.add(faTachometerAlt, faReceipt, faChartLine)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+
+Vue.config.productionTip = false
+
 new Vue({
-  router,
-  i18n,
-  render: h => h(App)
-}).$mount("#app");
+  render: h => h(App),
+  router
+}).$mount('#app')

@@ -1,28 +1,28 @@
 <template>
-  <div>
-    <notifications></notifications>
-    <router-view :key="$route.fullPath"></router-view>
+  <div id="app">
+    <main-nav/>
+    <span class="border-bottom"></span>
+    <transition name="fade" mode="out-in">
+      <router-view/>
+    </transition>
   </div>
 </template>
 
 <script>
-  export default {
-    methods: {
-      disableRTL() {
-        if (!this.$rtl.isRTL) {
-          this.$rtl.disableRTL();
-        }
-      },
-      toggleNavOpen() {
-        let root = document.getElementsByTagName('html')[0];
-        root.classList.toggle('nav-open');
-      }
-    },
-    mounted() {
-      this.$watch('$route', this.disableRTL, { immediate: true });
-      this.$watch('$sidebar.showSidebar', this.toggleNavOpen)
-    }
-  };
+import MainNav from './components/MainNav.vue';
+
+export default {
+  name: 'app',
+  components: {
+    MainNav
+  }
+}
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+
+html, body {
+  min-height: 100vh;
+}
+
+</style>
