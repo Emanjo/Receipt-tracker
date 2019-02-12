@@ -12,9 +12,11 @@ app.use(cors());
 
 const posts = require('./routes/api/posts');
 const receipts = require('./routes/api/receipts');
+const retailers = require('./routes/api/retailers');
 
 app.use('/api/posts', posts);
 app.use('/api/receipts', receipts);
+app.use('/api/retailers', retailers)
 
 // Production
 
