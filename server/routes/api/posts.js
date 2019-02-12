@@ -9,7 +9,6 @@ router.get('/', async (req, res) => {
 	res.send(await posts.find({}).toArray());
 });
 
-console.log(process.env.MONGO_DB)
 
 //Add posts
 router.post('/', async (req, res) => {
