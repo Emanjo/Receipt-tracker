@@ -8,44 +8,31 @@
 </template>
 
 <script>
-  import { barChart } from '../helpers/createCharts';
-
-  //Just some dummydata
-  let data = [
-    {
-      retailer: 'Rema',
-      date: 129876461,
-      items: [
-        {
-          description: 'Banan',
-          count: 1,
-          pricePerItem: 16
-        },
-        {
-          description: 'Melkesjokolade',
-          count: 1,
-          pricePerItem: 43 
-        },
-      ],
-    },
-    {
-      retailer: 'Kiwi',
-      total: 465
-    },
-    {
-      retailer: 'Spar',
-      total: 49
-    }
-  ]
+  import { barChartTopRetailers } from '../helpers/createCharts';
+  import axios from 'axios';
 
   export default {
-    mounted() {
+    data() {
+      return {
+        receipts: []
+      }
+    },
+    async mounted() {
+      try {
+      const reciepts = await axios.get('/api/receipts/');
+      const retailers = await axios.get('/api/retailers/');
+
+      this.retailers = retailers.data;
+      this.receipts = reciepts.data;
+      } catch (err) {
+        console.log(err);
+      }
+
       let chart = this.$refs.chart;
       let ctx = chart.getContext("2d");
       
-      barChart(ctx, 'Top retailers last 30 days based on total sum', data);
+      barChartTopRetailers(ctx, 'Top retailers last 30 days based on total sum', this.receipts.data, this.retailers.data);
     }
-    
   }
 </script>
 
