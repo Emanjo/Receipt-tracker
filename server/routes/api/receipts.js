@@ -1,60 +1,48 @@
 const express = require('express');
 const mongodb = require('mongodb');
-
 const router = express.Router();
 
 //Get receipts
 router.get('/', async (req, res) => {
-	const receipts = await loadReceiptsCollection(), receiptsData = await receipts.find({}).toArray();
-	let receiptsMeta = {}, receiptSums = [];
-	const reducer = (acc, curr) => acc + curr;
-
-	//Calculate total price of each receipt
-	receiptsData.forEach( element => {
-		let itemPrices = [];
-		element["items"].forEach( itemPrice => itemPrices.push(itemPrice["pricePerItem"] * itemPrice["count"]));
-
-		//Adds the "sum" key
-		element["sum"] = itemPrices.reduce(reducer);
-
-		receiptSums.push(element["sum"]);
-	});
+	const receipts = await loadReceiptsCollection(), data = await receipts.find({}).toArray();
+	let meta = {}, receiptSums = [];
 
 	//Calculates total sum of all receipt sums combined
-	receiptsMeta["totalSum"] = receiptSums.reduce(reducer);
+	data.forEach( receipt => receiptSums.push(receipt["sum"]));
+	meta["totalSum"] = receiptSums.reduce((acc, curr) => acc + curr);
 
-	res.send({ data: receiptsData, meta: receiptsMeta });
+	res.send({ data: data, meta: meta });
 });
 
 //Add receipt
 router.post('/', async (req, res) => {
-	const receipts = await loadReceiptsCollection();
-	const retailersCollection = await loadRetailersCollection();
+	const receipts = await loadReceiptsCollection(), retailersCollection = await loadRetailersCollection();
 	const retailersData = await retailersCollection.distinct("name");
+	let itemPrices = [], sum = 0;
+
+	// Add sum to receipt
+	req.body.items.forEach( itemPrice => itemPrices.push(itemPrice["pricePerItem"] * itemPrice["count"]));
+	sum = itemPrices.reduce((acc, cur) => acc + cur);
 
 	//Checks if the retailer is in database or not then adds it to the retailer collection
 	const resRetailer = req.body.retailer.toLowerCase();
 
 	if (!retailersData.includes(resRetailer)) {
-	 	await receipts.insertOne({
-			retailer: resRetailer,
-					date: Date.now(),
-					items: req.body.items
-		});
+
+		insertReceipt(receipts, resRetailer, Date.now(), req.body.items, sum);
 
 		await retailersCollection.insertOne({
 			name: resRetailer,
 		});
 
 		res.status(201).send();
+
 	} else {
-		await receipts.insertOne({
-			retailer: resRetailer,
-					date: Date.now(),
-					items: req.body.items
-		});
+
+		insertReceipt(receipts, resRetailer, Date.now(), req.body.items, sum);
 
 		res.status(201).send();
+
 	}
 });
 
@@ -84,5 +72,14 @@ async function loadRetailersCollection() {
 
 	return client.db(process.env.MONGO_DB).collection('retailers');
 };
+
+async function insertReceipt (collection, retailer, date, items, sum) {
+	return await collection.insertOne({
+		retailer: retailer,
+		date: date,
+		items: items,
+		sum: sum
+	});
+}
 
 module.exports = router;
