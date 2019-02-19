@@ -19,7 +19,6 @@ app.use('/api/receipts', receipts);
 app.use('/api/retailers', retailers)
 
 // Production
-
 if (process.env.NODE_ENV === 'production') {
 	//Static folder
 	app.use(express.static(__dirname + '/public'));

@@ -16,12 +16,12 @@ router.get('/', async (req, res) => {
 
 //Add receipt
 router.post('/', async (req, res) => {
-	const receipts = await loadReceiptsCollection(), retailersCollection = await loadRetailersCollection();
+	const receiptsCollection = await loadReceiptsCollection(), retailersCollection = await loadRetailersCollection();
 	const retailersData = await retailersCollection.distinct("name");
 	let itemPrices = [], sum = 0;
 
-	// Add sum to receipt
-	req.body.items.forEach( itemPrice => itemPrices.push(itemPrice["pricePerItem"] * itemPrice["count"]));
+	// Add sum to a new receipt
+	req.body.items.forEach( item => itemPrices.push(item["pricePerItem"] * item["count"]));
 	sum = itemPrices.reduce((acc, cur) => acc + cur);
 
 	//Checks if the retailer is in database or not then adds it to the retailer collection
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 
 	if (!retailersData.includes(resRetailer)) {
 
-		insertReceipt(receipts, resRetailer, Date.now(), req.body.items, sum);
+		insertReceipt(receiptsCollection, resRetailer, Date.now(), req.body.items, sum);
 
 		await retailersCollection.insertOne({
 			name: resRetailer,
@@ -39,19 +39,20 @@ router.post('/', async (req, res) => {
 
 	} else {
 
-		insertReceipt(receipts, resRetailer, Date.now(), req.body.items, sum);
+		insertReceipt(receiptsCollection, resRetailer, Date.now(), req.body.items, sum);
 
 		res.status(201).send();
-
 	}
 });
 
 //Delete receipt
 router.delete('/:id', async (req, res) => {
 	const receipts = await loadReceiptsCollection();
+	
 	await receipts.deleteOne({
 		_id: new mongodb.ObjectID(req.params.id)
 	});
+
 	res.status(200).send();
 });
 

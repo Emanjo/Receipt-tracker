@@ -1,3 +1,4 @@
+<!-- This file is a part of a tutorial and I use it as a refrence -->
 <template>
   <div class="container">
     <h1>Latest Posts</h1>

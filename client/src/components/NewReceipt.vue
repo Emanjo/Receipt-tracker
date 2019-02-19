@@ -49,23 +49,18 @@
       }
     },
     methods: {
-      addItem() {
+      addItem() { //Button for adding item field in form
         this.tableRowInputs.push({description: '<input name="item">', 
                           price: '<input type="number">',
                           count: '<input type="number">'});
       },
-      removeItem() {
+      removeItem() { //Button for removing item field in form
         if (this.tableRowInputs.length <= 1) {
           this.addItem();
         }
         this.tableRowInputs.splice(-1,3);
       }
-    },
-    mounted() {
-      console.log(this.tableRowInputs.length);
-      
-    }
-    
+    }  
   }
 </script>
 

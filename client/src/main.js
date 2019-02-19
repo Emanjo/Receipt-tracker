@@ -12,12 +12,14 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'bootstrap'
 
+//Defining the routes
 const routes = [
   { path: '/', component: Overview },
   { path: '/new-receipt', component: NewReceipt },
   { path: '/statistics', component: Statistics }
 ]
 
+//Config of the routing
 const router = new VueRouter({
   mode: 'history',
   linkActiveClass: "nav-item active",
@@ -25,11 +27,8 @@ const router = new VueRouter({
 })
 
 Vue.use(VueRouter, BootstrapVue)
-
 library.add(faTachometerAlt, faReceipt, faChartLine)
-
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-
 Vue.config.productionTip = false
 
 new Vue({
