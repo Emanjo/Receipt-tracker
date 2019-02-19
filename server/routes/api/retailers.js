@@ -16,9 +16,9 @@ router.get('/', async (req, res) => {
 
 //Get all retailers and total money spent on each based on days on the past like 7 days ago, 30 days etc. ago until current day
 router.get('/sum/:days', async (req, res) => {
-	const collection = await loadRetailersCollection(), data = await collection.find({}).toArray();
+	const collection = await loadRetailersCollection();
 	const receiptsCollection = await loadReceiptsCollection(), receiptsData = await receiptsCollection.find({}).toArray();
-	let meta = {};
+	let meta = {}, data = await collection.find({}).toArray();
 
 	//Adds a variable that holds the days in past based on the parameter
 	let daysInPast = Date.now() - (req.params.days * 24 * 60 * 60 * 1000);
@@ -37,12 +37,15 @@ router.get('/sum/:days', async (req, res) => {
 		});
 	  });
 
+	data = data.filter( retailer => retailer.sum > 0); //Remove retailer if sum is 0
+
 	//Sort and make biggest sum the 0 index of data array
 	data.sort( (a, b) => { return -a.sum - -b.sum});
 	
 	res.send({ data: data, meta: meta });
 });
 
+//Loads collections from MongoDB
 async function loadRetailersCollection() {
 	const client = await mongodb.MongoClient
 		.connect(process.env.MONGO_DB_URI, {

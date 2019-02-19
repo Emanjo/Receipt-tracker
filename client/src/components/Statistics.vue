@@ -2,7 +2,16 @@
   <div>
     <div class="container">
       <h1>Statistics</h1>
-      <canvas ref="chart"></canvas>
+      <hr />
+      <h3>Top retailers based on total sum</h3>
+      <div class="row">
+        <div class="col-6">
+          <canvas ref="chartOne"></canvas>
+        </div>
+        <div class="col-6">
+          <canvas ref="chartTwo"></canvas>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -12,26 +21,20 @@
   import axios from 'axios';
 
   export default {
-    data() {
-      return {
-        receipts: []
-      }
-    },
     async mounted() {
+      let topRetailerDataMonth = [], topRetailerDataWeek = [];
       try {
-      const reciepts = await axios.get('/api/receipts/');
-      const retailers = await axios.get('/api/retailers/');
-
-      this.retailers = retailers.data;
-      this.receipts = reciepts.data;
+        topRetailerDataWeek = await axios.get('/api/retailers/sum/7');
+        topRetailerDataMonth = await axios.get('/api/retailers/sum/30');
       } catch (err) {
         console.log(err);
       }
 
-      let chart = this.$refs.chart;
-      let ctx = chart.getContext("2d");
+      let chartOne = this.$refs.chartOne, chartTwo = this.$refs.chartTwo;
+      let ctxOne = chartOne.getContext("2d"), ctxTwo = chartTwo.getContext("2d");
       
-      barChartTopRetailers(ctx, 'Top retailers last 30 days based on total sum', this.receipts.data, this.retailers.data);
+      barChartTopRetailers(ctxOne, 'last 7 days', topRetailerDataWeek);
+      barChartTopRetailers(ctxTwo, 'last 30 days', topRetailerDataMonth);
     }
   }
 </script>
