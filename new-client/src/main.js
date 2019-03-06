@@ -3,10 +3,12 @@ import './plugins/vuetify'
 import App from './App.vue'
 import VueRouter from 'vue-router'
 import Dashboard from './components/Dashboard.vue'
+import NewReceipt from './components/New-receipt.vue';
 
 //Defining the routes
 const routes = [
-  { path: '/', component: Dashboard }
+  { path: '/', component: Dashboard },
+  { path: '/new-receipt', component: NewReceipt }
 ]
 
 //Config of the routing
