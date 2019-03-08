@@ -59,7 +59,7 @@
         <v-flex xs3>
         </v-flex>
         <v-flex xs12 sm6 md6>
-          <component v-for="itemRow in itemRows" :is="itemRow" :key="itemRow.id"></component>
+          <component v-for="(itemRow, index) in itemRows" :is="itemRow" @onChange="updateItems" :index="index" :key="index"></component>
         </v-flex>
         <v-flex xs3>
         </v-flex>
@@ -86,6 +86,7 @@
 
 <script>
   import ItemRow from './ItemRow.vue';
+  import axios from 'axios';
 
   export default {
     components: {
@@ -94,7 +95,6 @@
     data() {
       return {
         retailer: "",
-        date: "",
         items: [],
         itemRows: ['ItemRow','ItemRow', 'ItemRow'],
         date: new Date().toISOString().substr(0, 10),
@@ -104,8 +104,16 @@
       }
     },
     methods: {
-      addReceipt() {
-
+      async addReceipt() {
+        try {
+        await axios.post('/api/receipts', {
+            retailer: this.retailer,
+            date: Date.parse(this.date),
+            items: this.items
+          });
+        } catch (err) {
+          console.log(err);
+        }
       },
       addItemRow() {
         this.itemRows.push('ItemRow');
@@ -113,8 +121,13 @@
       removeItemRow() {
         if (this.itemRows.length <= 1) {
           this.addItemRow();
-        } 
-        this.itemRows.splice(-1,3);
+        }
+        this.items.splice(-1,1);
+        this.itemRows.splice(-1,1);
+      },
+      updateItems(object, index) {
+        this.$set(this.items, index, object)
+        console.log(this.items);
       }
     }
   }

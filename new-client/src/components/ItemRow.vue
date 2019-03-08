@@ -3,6 +3,7 @@
       <v-flex pa-8 xs12 sm6 md6 class="pr">
           <v-text-field p8
             label="Description"
+            v-on:change="emit"
             v-model="description"
           ></v-text-field>
         </v-flex>
@@ -11,6 +12,7 @@
           <v-text-field
             label="Price"
             type="number"
+            v-on:change="emit"
             v-model="price"
           ></v-text-field>
         </v-flex>
@@ -20,6 +22,7 @@
             label="Count"
             type="number"
             v-model="count"
+            v-on:change="emit"
             price
           ></v-text-field>
         </v-flex>
@@ -28,14 +31,21 @@
 
 <script>
   export default {
+    props: [
+      'index'
+    ],
     data() {
       return {
-        id: 0,
         description: '',
         price: 0,
         count: 0
       }
     },
+    methods: {
+      emit() {
+        this.$emit('onChange', {description: this.description, pricePerItem: parseInt(this.price), count: parseInt(this.count)}, this.index)
+      }
+    }
   }
 </script>
 

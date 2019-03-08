@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 
 	if (!retailersData.includes(resRetailer)) {
 
-		insertReceipt(receiptsCollection, resRetailer, new Date(1549398792000), req.body.items, sum);
+		insertReceipt(receiptsCollection, resRetailer, req.body.date, req.body.items, sum);
 
 		await retailersCollection.insertOne({
 			name: resRetailer,
@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
 
 	} else {
 
-		insertReceipt(receiptsCollection, resRetailer, new Date(1549398792000), req.body.items, sum);
+		insertReceipt(receiptsCollection, resRetailer, req.body.date, req.body.items, sum);
 
 		res.status(201).send();
 	}
