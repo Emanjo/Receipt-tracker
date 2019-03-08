@@ -16,6 +16,9 @@
         </div>
         <canvas ref="chartTwo"></canvas>
       </v-flex>
+      <v-flex xs12>
+        <v-alert class="text-xs-center" :value="error" type="error" transition="scale-transition"><b>Error!</b> Connection to database failed!</v-alert>
+      </v-flex>
       </v-layout>
     </div>
 </template>
@@ -28,24 +31,27 @@
     data() {
       return {
         notLoaded: true,
+        error: false
       }
     },
     async mounted() {
-      let topRetailerDataMonth = [], topRetailerDataWeek = [];
-      try {
-        topRetailerDataWeek = await axios.get('/api/retailers/sum/7');
-        topRetailerDataMonth = await axios.get('/api/retailers/sum/30');
-        this.notLoaded = false;
-      } catch (err) {
-        // eslint-disable-next-line
-        console.log(err);
-      }
-
-      let chartOne = this.$refs.chartOne, chartTwo = this.$refs.chartTwo;
-      let ctxOne = chartOne.getContext("2d"), ctxTwo = chartTwo.getContext("2d");
+      axios.all([ 
+        axios.get('/api/retailers/sum/7'), 
+        axios.get('/api/retailers/sum/30') 
+        ]) 
+      .then(axios.spread((sevenReq, thirtyReq) => {
+        let chartOne = this.$refs.chartOne, chartTwo = this.$refs.chartTwo;
+        let ctxOne = chartOne.getContext("2d"), ctxTwo = chartTwo.getContext("2d");
       
-      barChartTopRetailers(ctxOne, 'last 7 days', topRetailerDataWeek);
-      barChartTopRetailers(ctxTwo, 'last 30 days', topRetailerDataMonth);
+        barChartTopRetailers(ctxOne, 'last 7 days', sevenReq.data.data);
+        barChartTopRetailers(ctxTwo, 'last 30 days', thirtyReq.data.data);
+
+        this.notLoaded = false;
+      })) 
+      .catch((googleErr, appleErr) => {
+          this.notLoaded = false;
+          this.error = true;
+      });
     }
   }
 </script>

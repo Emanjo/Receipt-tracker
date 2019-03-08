@@ -30,25 +30,25 @@
             lazy
             full-width
             width="290px"
-          >
-        <template v-slot:activator="{ on }">
-          <v-text-field
-            v-model="date"
-            label="Picker in dialog"
-            prepend-icon="event"
-            readonly
-            v-on="on"
-          ></v-text-field>
-        </template>
-        <v-date-picker v-model="date" scrollable>
-          <v-spacer></v-spacer>
-          <v-btn flat color="primary" @click="modal = false">Cancel</v-btn>
-          <v-btn flat color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
-        </v-date-picker>
-      </v-dialog>
+            >
+          <template v-slot:activator="{ on }">
+            <v-text-field
+              v-model="date"
+              label="Date"
+              prepend-icon="event"
+              readonly
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker v-model="date" scrollable>
+            <v-spacer></v-spacer>
+            <v-btn flat color="primary" @click="modal = false">Cancel</v-btn>
+            <v-btn flat color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
+          </v-date-picker>
+          </v-dialog>
         </v-flex>
-        <v-flex xs>
-        </v-flex>
+      <v-flex xs>
+      </v-flex>
 
         <v-flex xs3>
         </v-flex>
@@ -78,9 +78,17 @@
         </v-flex>
         <v-flex xs3>
         </v-flex>
-        
+        <v-flex xs3>
+        </v-flex>
+        <v-flex xs6>
+           <div class="text-xs-center">
+            <v-alert :value="success" type="success" transition="scale-transition" dismissible>  Success! Receipt was made. </v-alert>
+            <v-alert :value="error" type="error" transition="scale-transition" dismissible>  Something went wrong! Please try again later. </v-alert>
+          </div>
+        </v-flex>
       </v-layout>
     </v-container>
+
   </v-form>
 </template>
 
@@ -90,30 +98,36 @@
 
   export default {
     components: {
-      ItemRow
+      ItemRow,
     },
     data() {
       return {
         retailer: "",
         items: [],
-        itemRows: ['ItemRow','ItemRow', 'ItemRow'],
+        itemRows: ['ItemRow'],
         date: new Date().toISOString().substr(0, 10),
         modal: false,
         menu: false,
-        menu2: false
+        menu2: false,
+        success: false,
+        error: false,
       }
     },
     methods: {
       async addReceipt() {
-        try {
-        await axios.post('/api/receipts', {
-            retailer: this.retailer,
-            date: Date.parse(this.date),
-            items: this.items
-          });
-        } catch (err) {
+        axios.post('/api/receipts', {
+          retailer: this.retailer,
+          date: Date.parse(this.date),
+          items: this.items
+        })
+        .then( response => {
+          this.success = true;
+          console.log(response);
+        })
+        .catch( err => {
+          this.error = true;
           console.log(err);
-        }
+        });
       },
       addItemRow() {
         this.itemRows.push('ItemRow');
@@ -122,7 +136,7 @@
         if (this.itemRows.length <= 1) {
           this.addItemRow();
         }
-        this.items.splice(-1,1);
+        this.items.splice(-1,1); // Make this one better, since it will delete wrong objects..
         this.itemRows.splice(-1,1);
       },
       updateItems(object, index) {

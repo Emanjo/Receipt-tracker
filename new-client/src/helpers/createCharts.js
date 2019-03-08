@@ -13,8 +13,10 @@ function getRandomColor() {
 export function barChartTopRetailers(ctx, title, topRetailers) {
     let labels = [], total = [], colors = [];
 
+    console.log(topRetailers);
+
   //Creates new objects with default sum of 0 and adds it to retailersAndSum const
-  topRetailers.data.data.forEach( retailer => {
+  topRetailers.forEach( retailer => {
       labels.push(retailer.name);
       total.push(retailer.sum);
       colors.push(getRandomColor());

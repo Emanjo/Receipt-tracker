@@ -38,7 +38,7 @@
       return {
         description: '',
         price: 0,
-        count: 0
+        count: 1
       }
     },
     methods: {
