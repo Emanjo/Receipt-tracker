@@ -2,8 +2,8 @@ import Vue from 'vue'
 import './plugins/vuetify'
 import App from './App.vue'
 import VueRouter from 'vue-router'
-import Dashboard from './components/Dashboard.vue'
-import NewReceipt from './components/New-receipt.vue';
+import Dashboard from './components/pages/Dashboard.vue'
+import NewReceipt from './components/pages/NewReceipt.vue'
 
 //Defining the routes
 const routes = [
@@ -14,7 +14,6 @@ const routes = [
 //Config of the routing
 const router = new VueRouter({
   mode: 'history',
-  linkActiveClass: "",
   routes
 })
 

@@ -1,32 +1,33 @@
 <template>
   <v-app>
-    <v-toolbar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span class="font-weight-light">Receipt tracker</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        to="/new-receipt"
-      >
-        <span class="mr-2">New receipt</span>
-      </v-btn>
-    </v-toolbar>
-
+    <main-nav/>
     <v-content>
       <v-container>
-        <router-view></router-view>
+        <router-view/>
       </v-container>
     </v-content>
-    <v-footer app></v-footer>
+     <Footer/>
   </v-app>
 </template>
 
 <script>
 
+import MainNav from './components/MainNav.vue';
+import Footer from './components/Footer.vue';
+
 export default {
   name: 'App',
+  components: {
+    MainNav,
+    Footer,
+  },
   data () {
     return {
+      items: [
+          { title: 'Home', icon: 'dashboard' },
+          { title: 'About', icon: 'question_answer' }
+        ],
+        right: null
       //
     }
   }

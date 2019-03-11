@@ -6,13 +6,13 @@
       <v-layout row wrap>
       <v-flex xs12 md6>
         <div class="loader text-xs-center">
-          <img v-if="notLoaded" src="../assets/loader.gif" alt="Loading icon">
+          <img v-if="notLoaded" src="../../assets/loader.gif" alt="Loading icon">
         </div>
         <canvas ref="chartOne"></canvas>
       </v-flex>
       <v-flex xs12 md6>
         <div class="loader text-xs-center">
-          <img v-if="notLoaded" src="../assets/loader.gif" alt="Loading icon">
+          <img v-if="notLoaded" src="../../assets/loader.gif" alt="Loading icon">
         </div>
         <canvas ref="chartTwo"></canvas>
       </v-flex>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-  import { barChartTopRetailers } from '../helpers/createCharts';
+  import { barChartTopRetailers } from '../../helpers/createCharts';
   import axios from 'axios';
 
   export default {
@@ -48,7 +48,7 @@
 
         this.notLoaded = false;
       })) 
-      .catch((googleErr, appleErr) => {
+      .catch(() => {
           this.notLoaded = false;
           this.error = true;
       });
