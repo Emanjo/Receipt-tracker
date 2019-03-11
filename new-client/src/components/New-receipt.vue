@@ -2,8 +2,14 @@
   <v-form>
     <v-container>
       <v-layout row wrap>
+        <v-flex xs12>
+           <div class="text-xs-center">
+            <v-alert :value="success" type="success" transition="scale-transition" dismissible @click="alertClicked">  Success! Receipt was made. </v-alert>
+            <v-alert :value="error" type="error" transition="scale-transition" dismissible @click="alertClicked">  Something went wrong! Please try again later. </v-alert>
+          </div>
+          </v-flex>
 
-        <v-flex xs12 >
+        <v-flex xs12>
           <h2 class="text-xs-center display-1 font-weight-thin mb-3 mt-3">New receipt</h2>
         </v-flex>
 
@@ -73,19 +79,12 @@
 
         <v-flex xs3>
         </v-flex>
-        <v-flex xs12 sm6 md6>
-          <v-btn color="info" @click="addReceipt"><v-icon>note_add</v-icon> Register receipt</v-btn>
-        </v-flex>
-        <v-flex xs3>
-        </v-flex>
-        <v-flex xs3>
-        </v-flex>
-        <v-flex xs6>
-           <div class="text-xs-center">
-            <v-alert :value="success" type="success" transition="scale-transition" dismissible @click="alertClicked">  Success! Receipt was made. </v-alert>
-            <v-alert :value="error" type="error" transition="scale-transition" dismissible>  Something went wrong! Please try again later. </v-alert>
+        <v-flex xs12 sm6 md6 pt-5>
+          <div class="text-xs-center">
+            <v-btn color="info" @click="addReceipt"><v-icon>note_add</v-icon> Register receipt</v-btn>
           </div>
         </v-flex>
+
       </v-layout>
     </v-container>
 
