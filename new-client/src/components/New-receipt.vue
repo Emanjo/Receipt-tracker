@@ -82,7 +82,7 @@
         </v-flex>
         <v-flex xs6>
            <div class="text-xs-center">
-            <v-alert :value="success" type="success" transition="scale-transition" dismissible>  Success! Receipt was made. </v-alert>
+            <v-alert :value="success" type="success" transition="scale-transition" dismissible @click="alertClicked">  Success! Receipt was made. </v-alert>
             <v-alert :value="error" type="error" transition="scale-transition" dismissible>  Something went wrong! Please try again later. </v-alert>
           </div>
         </v-flex>
@@ -142,6 +142,10 @@
       updateItems(object, index) {
         this.$set(this.items, index, object)
         console.log(this.items);
+      },
+      alertClicked() {
+        this.success = false;
+        this.error = false;
       }
     }
   }
