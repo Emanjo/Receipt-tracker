@@ -1,5 +1,6 @@
 const express = require('express');
 const mongodb = require('mongodb');
+const date = require('../../helpers/date')
 const router = express.Router();
 
 //Get all items
@@ -17,16 +18,15 @@ router.get('/', async (req, res) => {
 router.get('/count/:days', async (req, res) => {
   let collection =  await loadReceiptsCollection();
 
-  //Adds a variable that holds the days in past based on the parameter passed
-	let daysInPast = Date.now() - (req.params.days * 24 * 60 * 60 * 1000);
-	daysInPast = new Date(daysInPast);
-	daysInPast.setHours(00,00,01); //Set it to one second past twelve so all receipts of that days counts in
+  let itemArray = await collection.aggregate([{$match: {date: {$gt: date.dateInPast(req.params.days)}}}, {$unwind: "$items"}, {$group: {_id: "$items.description", count: {$sum: "$items.count"}}}]).toArray();
 
-  let itemArray = await collection.aggregate([{$match: {date: {$gt: Date.parse(daysInPast)}}}, {$unwind: "$items"}, {$group: {_id: "$items.description", count: {$sum: "$items.count"}}}]).toArray();
-
+  //Sort and make biggest sum the 0 index of data array
+  itemArray.sort( (a, b) => { return -a.count - -b.count});
+  
 	res.send({ data: itemArray, meta: {} });
 });
 
+//Loads collection from MongoDB
 async function loadReceiptsCollection() {
 	const client = await mongodb.MongoClient
 		.connect(process.env.MONGO_DB_URI, {

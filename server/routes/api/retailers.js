@@ -1,5 +1,6 @@
 const express = require('express');
 const mongodb = require('mongodb');
+const date = require('../../helpers/date')
 const router = express.Router();
 
 //Get all retailers
@@ -18,14 +19,8 @@ router.get('/sum/:days', async (req, res) => {
 	const collection = await loadReceiptsCollection();
 	let meta = {};
 
-
-	//Adds a variable that holds the days in past based on the parameter passed
-	let daysInPast = Date.now() - (req.params.days * 24 * 60 * 60 * 1000);
-	daysInPast = new Date(daysInPast);
-	daysInPast.setHours(00,00,01); //Set it to one second past twelve so all receipts of that days counts in
-
 	//Gets the retailers and sum from the database
-	let retailersSum = await collection.aggregate([{$match: {date: {$gt: Date.parse(daysInPast) }}}, { $group: { _id: "$retailer", sum: {$sum: "$sum"}}}]).toArray();
+	let retailersSum = await collection.aggregate([{$match: {date: {$gt: date.dateInPast(req.params.days) }}}, { $group: { _id: "$retailer", sum: {$sum: "$sum"}}}]).toArray();
 
 	//Sort and make biggest sum the 0 index of data array
 	retailersSum.sort( (a, b) => { return -a.sum - -b.sum});

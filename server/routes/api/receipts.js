@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 
 //Add receipt
 router.post('/', async (req, res) => {
-	const receiptsCollection = await loadReceiptsCollection();
+	const collection = await loadReceiptsCollection();
 
 	let itemPrices = [], sum = 0;
 
@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
 		}
 	)); 
 
-	insertReceipt(receiptsCollection, req.body.retailer.toLowerCase(), req.body.date, resItems, sum);
+	insertReceipt(collection, req.body.retailer.toLowerCase(), req.body.date, resItems, sum);
 
 	res.status(201).send();
 });
@@ -59,6 +59,7 @@ async function loadReceiptsCollection() {
 	return client.db(process.env.MONGO_DB).collection('receipts');
 };
 
+//
 async function insertReceipt (collection, retailer, date, items, sum) {
 	return await collection.insertOne({
 		retailer: retailer,
