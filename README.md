@@ -1,10 +1,11 @@
-# JavaScript full stack project
-A full stack project with JavaScript.
+# Receipt tracker
+A full stack project with JavaScript. The purpose of this app is to learn JS as a fullstack programmig language.
+It implements Node.js, Express.js, MongoDB and Vue.js. 
 
 ***
-In this project I will make an webapplication that tracks your receipts.
+The app keeps track of your receipts and shows different kinds of stats like how much money you spent on a certain retailer etc.
 
 ### Functionality
-- Log receipts, amounts and date
-- List receipts
-- Statistics (graphs)
+- Log receipts
+- Display statistics based on the receipts stored.
+- ++
