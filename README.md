@@ -1,5 +1,5 @@
 # Receipt tracker
-A full stack project with JavaScript. The purpose of this app is to learn JS as a fullstack programmig language.
+A full stack project with JavaScript. The purpose of this app is to learn JS as a full stack programmig language.
 It implements Node.js, Express.js, MongoDB and Vue.js. 
 
 ***
