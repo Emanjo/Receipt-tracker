@@ -14,24 +14,15 @@ router.get('/', async (req, res) => {
 });
 
 //Get all items with a counter based on times it appears in the receipts
-router.get('/count', async (req, res) => {
-  const receiptsCollection =  await loadReceiptsCollection(),
-  receiptsData = await receiptsCollection.find({}).toArray(),
-  items = await receiptsCollection.distinct("items.description");
+router.get('/count/:days', async (req, res) => {
+  let collection =  await loadReceiptsCollection();
 
-  let itemArray = items.map(element => element = { description: element, count:  0});
+  //Adds a variable that holds the days in past based on the parameter passed
+	let daysInPast = Date.now() - (req.params.days * 24 * 60 * 60 * 1000);
+	daysInPast = new Date(daysInPast);
+	daysInPast.setHours(00,00,01); //Set it to one second past twelve so all receipts of that days counts in
 
-  console.log(itemArray);
-
-  receiptsData.forEach(receipt => {
-    receipt.items.forEach( itemReceipt => {
-      itemArray.forEach(item => {
-        if(itemReceipt.description === item.description) {
-          item.count = item.count + itemReceipt.count;
-        }
-      })
-    })
-  });
+  let itemArray = await collection.aggregate([{$match: {date: {$gt: Date.parse(daysInPast)}}}, {$unwind: "$items"}, {$group: {_id: "$items.description", count: {$sum: "$items.count"}}}]).toArray();
 
 	res.send({ data: itemArray, meta: {} });
 });
