@@ -4,9 +4,8 @@ const router = express.Router();
 
 //Get all items
 router.get('/', async (req, res) => {
-  const itemsCollection = await loadItemsCollection(), 
-  data = await itemsCollection.find({}).toArray();
-
+  const collection = await loadReceiptsCollection(), 
+  data = await collection.distinct("items.description");
   let meta = {};
 
   meta.numberOfItems = data.length;
@@ -16,16 +15,17 @@ router.get('/', async (req, res) => {
 
 //Get all items with a counter based on times it appears in the receipts
 router.get('/count', async (req, res) => {
-  const itemsCollection = await loadItemsCollection(),
-  receiptsCollection =  await loadReceiptsCollection(),
+  const receiptsCollection =  await loadReceiptsCollection(),
   receiptsData = await receiptsCollection.find({}).toArray(),
-  itemData = await itemsCollection.find({}).toArray();
+  items = await receiptsCollection.distinct("items.description");
 
-  itemData.forEach(element => element.count = 0 );
+  let itemArray = items.map(element => element = { description: element, count:  0});
+
+  console.log(itemArray);
 
   receiptsData.forEach(receipt => {
     receipt.items.forEach( itemReceipt => {
-      itemData.forEach(item => {
+      itemArray.forEach(item => {
         if(itemReceipt.description === item.description) {
           item.count = item.count + itemReceipt.count;
         }
@@ -33,19 +33,8 @@ router.get('/count', async (req, res) => {
     })
   });
 
-	res.send({ data: itemData, meta: {} });
+	res.send({ data: itemArray, meta: {} });
 });
-
-
-
-async function loadItemsCollection() {
-	const client = await mongodb.MongoClient
-		.connect(process.env.MONGO_DB_URI, {
-			useNewUrlParser: true
-		});
-
-	return client.db(process.env.MONGO_DB).collection('items');
-};
 
 async function loadReceiptsCollection() {
 	const client = await mongodb.MongoClient

@@ -2,10 +2,9 @@ const express = require('express');
 const mongodb = require('mongodb');
 const router = express.Router();
 
-
 //Get all retailers
 router.get('/', async (req, res) => {
-	const collection = await loadRetailersCollection(), data = await collection.find({}).toArray();
+	const collection = await loadReceiptsCollection(), data = await collection.distinct("retailer");
 	let meta = {};
 
 	// Add the numbers of retailers to metadata
@@ -16,45 +15,25 @@ router.get('/', async (req, res) => {
 
 //Get all retailers and total money spent on each based on days on the past like 7 days ago, 30 days etc. ago until current day
 router.get('/sum/:days', async (req, res) => {
-	const collection = await loadRetailersCollection();
-	const receiptsCollection = await loadReceiptsCollection(), receiptsData = await receiptsCollection.find({}).toArray();
-	let meta = {}, data = await collection.find({}).toArray();
+	const collection = await loadReceiptsCollection();
+	let meta = {};
 
-	//Adds a variable that holds the days in past based on the parameter
+
+	//Adds a variable that holds the days in past based on the parameter passed
 	let daysInPast = Date.now() - (req.params.days * 24 * 60 * 60 * 1000);
 	daysInPast = new Date(daysInPast);
 	daysInPast.setHours(00,00,01); //Set it to one second past twelve so all receipts of that days counts in
 
-	 //Adds sums to each object in data
-	 data.forEach( retailer => {
-		retailer.sum = 0;
-		receiptsData.forEach( receipt => {
-		  if(receipt.retailer === retailer.name && receipt.date > daysInPast ) { // Adds the sum only if it is in the range of x days in the past
-			retailer.sum += receipt.sum;
-		  } else if (receipt.retailer === retailer.name && req.params.days == 0) { //Is param is 0 then it will show total sum of all time
-			retailer.sum += receipt.sum;
-		  }
-		});
-	  });
-
-	data = data.filter( retailer => retailer.sum > 0); //Remove retailer if sum is 0
+	//Gets the retailers and sum from the database
+	let retailersSum = await collection.aggregate([{$match: {date: {$gt: Date.parse(daysInPast) }}}, { $group: { _id: "$retailer", sum: {$sum: "$sum"}}}]).toArray();
 
 	//Sort and make biggest sum the 0 index of data array
-	data.sort( (a, b) => { return -a.sum - -b.sum});
+	retailersSum.sort( (a, b) => { return -a.sum - -b.sum});
 	
-	res.send({ data: data, meta: meta });
+	res.send({ data: retailersSum, meta: meta });
 });
 
-//Loads collections from MongoDB
-async function loadRetailersCollection() {
-	const client = await mongodb.MongoClient
-		.connect(process.env.MONGO_DB_URI, {
-			useNewUrlParser: true
-	});
-
-	return client.db(process.env.MONGO_DB).collection('retailers');
-};
-
+//Loads collection from MongoDB
 async function loadReceiptsCollection() {
 	const client = await mongodb.MongoClient
 		.connect(process.env.MONGO_DB_URI, {
