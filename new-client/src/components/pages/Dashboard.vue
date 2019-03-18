@@ -1,62 +1,145 @@
 <template>
-  <div>
-      <h1>Dashboard</h1>
-      <v-divider></v-divider>
-      <h2 class="text-xs-center display-1 font-weight-thin mb-3 mt-3">Top retailers</h2>
       <v-layout row wrap>
-      <v-flex xs12 md6>
-        <div class="loader text-xs-center">
-          <img v-if="notLoaded" src="../../assets/loader.gif" alt="Loading icon">
-        </div>
-        <canvas ref="chartOne"></canvas>
-      </v-flex>
-      <v-flex xs12 md6>
-        <div class="loader text-xs-center">
-          <img v-if="notLoaded" src="../../assets/loader.gif" alt="Loading icon">
-        </div>
-        <canvas ref="chartTwo"></canvas>
-      </v-flex>
-      <v-flex xs12>
-        <v-alert class="text-xs-center" :value="error" type="error" transition="scale-transition"><b>Error!</b> Connection to database failed!</v-alert>
-      </v-flex>
+        <v-flex pa-3 xs12>
+          <div class="text-xs-center">
+            <h1>Dashboard</h1>
+          </div>
+        </v-flex>
+        <v-flex pr-2 pb-3 xs12 md6>
+          <v-card>
+          <v-card-title primary-title>
+            <v-layout row wrap>
+              <v-flex xs12>
+                <div class="text-xs-center">
+                  <h2 class="font-weight-thin">Top Retailers</h2>
+                </div>
+              </v-flex>
+              <v-flex xs12>
+                <v-text-field
+                  label="days in past"
+                  box
+                  class="pt-2"
+                  v-model="daysTopRetailer"
+                  @change="updateTopRetailers"
+                ></v-text-field>
+              </v-flex>
+            </v-layout>
+          </v-card-title>
+            <div class="loader text-xs-center">
+              <img v-if="notLoadedTopRetailer" src="../../assets/loader.gif" alt="Loading icon">
+            </div>
+            <div class="pr-3 pb-3 pt-0">
+              <canvas px-2 ref="topRetailerChart"></canvas>
+            </div>
+          </v-card>
+        </v-flex>
+        <v-flex pl-2 pb-3 xs12 md6>
+          <v-card>
+          <v-card-title primary-title>
+            <v-layout row wrap>
+              <v-flex xs12>
+                <div class="text-xs-center">
+                  <h2 class="font-weight-thin">Top Items</h2>
+                </div>
+              </v-flex>
+              <v-flex xs12>
+                <v-text-field
+                  class="pt-2"
+                  label="days in past"
+                  box
+                  v-model="daysTopItem"
+                  @change="updateTopItems"
+                ></v-text-field>
+              </v-flex>
+            </v-layout>
+          </v-card-title>
+            <div class="loader text-xs-center">
+              <img v-if="notLoadedTopItem" src="../../assets/loader.gif" alt="Loading icon">
+            </div>
+            <div class="pl-3 pb-3 pt-0">
+              <canvas px-2 ref="topItemChart"></canvas>
+            </div>
+          </v-card>
+        </v-flex>
+        <v-flex xs12>
+          <receipts-overview></receipts-overview>
+        </v-flex>
       </v-layout>
-    </div>
 </template>
 
 <script>
-  import { barChartTopRetailers } from '../../helpers/createCharts';
+  import { barChartTopRetailers, barChartTopItems } from '../../helpers/createCharts';
   import axios from 'axios';
+  import ReceiptsOverview from './../dashboard/ReceiptsOverview.vue';
 
   export default {
+    components: {
+      ReceiptsOverview
+    },
     data() {
       return {
-        notLoaded: true,
-        error: false
+        notLoadedTopItem: true,
+        notLoadedTopRetailer: true,
+        error: false,
+        daysTopItem: 7,
+        daysTopRetailer: 7,
+        topItemChart: null,
+        topRetailerChart: null,
       }
     },
-    async mounted() {
-      axios.all([ 
-        axios.get('/api/retailers/sum/7'), 
-        axios.get('/api/retailers/sum/30') 
-        ]) 
-      .then(axios.spread((sevenReq, thirtyReq) => {
-        let chartOne = this.$refs.chartOne, chartTwo = this.$refs.chartTwo;
-        let ctxOne = chartOne.getContext("2d"), ctxTwo = chartTwo.getContext("2d");
-      
-        barChartTopRetailers(ctxOne, 'last 7 days', sevenReq.data.data);
-        barChartTopRetailers(ctxTwo, 'last 30 days', thirtyReq.data.data);
+    methods: {
+      async updateTopItems() {
 
-        this.notLoaded = false;
-      })) 
-      .catch(() => {
-          this.notLoaded = false;
+        if(this.topItemChart) { this.topItemChart.destroy()}
+
+        this.notLoadedTopItem = true;
+      
+        const topItemChart = this.$refs.topItemChart,
+              topItemCtx = topItemChart.getContext("2d");
+
+        axios.get(`/api/items/count/${this.daysTopItem}`)
+        .then( response => {
+  
+        this.topItemChart = barChartTopItems(topItemCtx, response.data.data);
+
+        this.notLoadedTopItem = false;
+
+        })
+        .catch( () => {
+          this.notLoadedTopItem = false;
           this.error = true;
-      });
+        });
+      },
+      async updateTopRetailers() {
+
+        if(this.topRetailerChart) { this.topRetailerChart.destroy()}
+
+        this.notLoadedTopRetailer = true;
+      
+        const topRetailerChart = this.$refs.topRetailerChart, 
+              topRetailerCtx = topRetailerChart.getContext("2d");
+
+        axios.get(`/api/retailers/sum/${this.daysTopRetailer}`)
+        .then( response => {
+  
+        this.topRetailerChart = barChartTopRetailers(topRetailerCtx, response.data.data);
+
+        this.notLoadedTopRetailer = false;
+
+        })
+        .catch( () => {
+          this.notLoadedTopRetailer = false;
+          this.error = true;
+        });
+      }
+
+    },
+    async mounted() {
+
+      this.updateTopItems();
+
+      this.updateTopRetailers();
+
     }
   }
 </script>
-
-<style scoped>
-
-
-</style>

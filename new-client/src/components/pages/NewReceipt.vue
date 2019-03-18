@@ -128,13 +128,11 @@
           date: Date.parse(this.date),
           items: this.items
         })
-        .then( response => {
+        .then( () => {
           this.success = true;
-          console.log(response);
         })
-        .catch( err => {
+        .catch( () => {
           this.error = true;
-          console.log(err);
         });
       },
       addItemRow() {
@@ -142,14 +140,14 @@
       },
       removeItemRow() {
         if (this.itemRows.length <= 1) {
-          this.addItemRow();
+          //Do nothing
+        } else {
+          this.items.splice(-1,1);
+          this.itemRows.splice(-1,1);
         }
-        this.items.splice(-1,1); // Make this one better, since it will delete wrong objects..
-        this.itemRows.splice(-1,1);
       },
       updateItems(object, index) {
         this.$set(this.items, index, object)
-        console.log(this.items);
       },
       alertClicked() {
         this.success = false;

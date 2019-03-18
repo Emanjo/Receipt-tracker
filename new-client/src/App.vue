@@ -19,17 +19,7 @@ export default {
   name: 'App',
   components: {
     MainNav,
-    Footer,
-  },
-  data () {
-    return {
-      items: [
-          { title: 'Home', icon: 'dashboard' },
-          { title: 'About', icon: 'question_answer' }
-        ],
-        right: null
-      //
-    }
+    Footer
   }
 }
 </script>

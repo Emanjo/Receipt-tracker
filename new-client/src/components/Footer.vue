@@ -1,10 +1,10 @@
 <template>
     <div>
-        <v-footer app height="auto" color="primary lighten-1">
+        <v-footer height="auto" color="primary lighten-1">
             <v-layout justify-center row wrap>
                 <v-btn
                     v-for="link in links"
-                    :key="link"
+                    :key="link.name"
                     color="white"
                     flat
                     round

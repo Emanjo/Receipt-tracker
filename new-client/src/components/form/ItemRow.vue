@@ -43,7 +43,11 @@
     },
     methods: {
       emit() {
-        this.$emit('onChange', {description: this.description, pricePerItem: parseInt(this.price), count: parseInt(this.count)}, this.index)
+        this.$emit('onChange', {
+          description: this.description, 
+          pricePerItem: parseInt(this.price), 
+          count: parseInt(this.count)
+          }, this.index);
       }
     }
   }
@@ -52,18 +56,17 @@
 <style scoped>
 
 @media (min-width: 600px) {
-  .pr {
-  padding-right: 8px;
-}
+    .pr {
+    padding-right: 8px;
+  }
 
-.pa {
-  padding: 0 8px;
-}
+  .pa {
+    padding: 0 8px;
+  }
 
-.pl {
-  padding-left: 8px;
-}
-
+  .pl {
+    padding-left: 8px;
+  }
 }
 
 </style>
