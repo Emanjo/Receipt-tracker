@@ -8,13 +8,5 @@ module.exports = {
 				target: 'http://localhost:5000'
 			}
 		}
-	},
-  pluginOptions: {
-    'style-resources-loader': {
-      preProcessor: 'scss',
-      patterns: [
-        path.resolve(__dirname, 'src/styles/imports.scss')
-      ]
-    }
-  }
+	}
 }

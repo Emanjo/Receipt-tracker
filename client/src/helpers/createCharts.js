@@ -10,15 +10,19 @@ function getRandomColor() {
     return color;
 }
 
-export function barChartTopRetailers(ctx, title, topRetailers) {
+export function barChartTopRetailers(ctx, data) {
     let labels = [], total = [], colors = [];
 
   //Creates new objects with default sum of 0 and adds it to retailersAndSum const
-  topRetailers.data.data.forEach( retailer => {
-      labels.push(retailer.name);
+  data.forEach( retailer => {
+      
+      labels.push(retailer._id);
       total.push(retailer.sum);
       colors.push(getRandomColor());
   });
+
+  labels.slice(0,10);
+  total.slice(0,10);
 
   return new Chart(ctx, {
     type: 'bar',
@@ -29,7 +33,7 @@ export function barChartTopRetailers(ctx, title, topRetailers) {
             data: total,
             backgroundColor: colors,
             borderWidth: 1
-        }]
+        }],
     },
     options: {
         scales: {
@@ -37,14 +41,54 @@ export function barChartTopRetailers(ctx, title, topRetailers) {
                 ticks: {
                     beginAtZero:true
                 }
+            }],
+            xAxes: [{
+                display: false
             }]
         },
-        title: {
-          display: true,
-          text: title,
-          fontSize: 20
-        },
-        legend: { display: false} 
+        legend: { display: false},
     }
+  });
+}
+
+export function barChartTopItems(ctx, data) {
+    let labels = [], total = [], colors = [];
+
+  data.forEach( retailer => {
+      labels.push(retailer._id);
+      total.push(retailer.count);
+      colors.push(getRandomColor());
+  });
+
+  labels = labels.slice(0,10);
+  total = total.slice(0,10);
+
+  return new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Count',
+            data: total,
+            backgroundColor: colors,
+            borderWidth: 1
+        }],
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }],
+            xAxes: [{
+                display: false
+            }]
+        },
+        legend: { 
+            display: false
+        },
+    }
+
   });
 }

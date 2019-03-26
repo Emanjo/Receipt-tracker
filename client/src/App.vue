@@ -1,28 +1,25 @@
 <template>
-  <div id="app">
+  <v-app>
     <main-nav/>
-    <span class="border-bottom"></span>
-    <transition name="fade" mode="out-in">
-      <router-view/>
-    </transition>
-  </div>
+    <v-content>
+      <v-container>
+        <router-view/>
+      </v-container>
+    </v-content>
+     <Footer/>
+  </v-app>
 </template>
 
 <script>
+
 import MainNav from './components/MainNav.vue';
+import Footer from './components/Footer.vue';
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
-    MainNav
+    MainNav,
+    Footer
   }
 }
 </script>
-
-<style lang="scss">
-
-html, body {
-  min-height: 100vh;
-}
-
-</style>

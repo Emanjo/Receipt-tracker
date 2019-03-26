@@ -1,34 +1,24 @@
 import Vue from 'vue'
+import './plugins/vuetify'
 import App from './App.vue'
 import VueRouter from 'vue-router'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faTachometerAlt, faReceipt, faChartLine } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import Overview from './components/Overview.vue'
-import NewReceipt from './components/NewReceipt.vue'
-import Statistics from './components/Statistics.vue'
-import BootstrapVue from 'bootstrap-vue'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-import 'bootstrap'
+import Dashboard from './components/pages/Dashboard.vue'
+import NewReceipt from './components/pages/NewReceipt.vue'
 
 //Defining the routes
 const routes = [
-  { path: '/', component: Overview },
-  { path: '/new-receipt', component: NewReceipt },
-  { path: '/statistics', component: Statistics }
+  { path: '/', component: Dashboard },
+  { path: '/new-receipt', component: NewReceipt }
 ]
 
 //Config of the routing
 const router = new VueRouter({
   mode: 'history',
-  linkActiveClass: "nav-item active",
   routes
 })
 
-Vue.use(VueRouter, BootstrapVue)
-library.add(faTachometerAlt, faReceipt, faChartLine)
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.use(VueRouter)
+
 Vue.config.productionTip = false
 
 new Vue({
