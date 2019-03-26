@@ -30,16 +30,10 @@ import axios from 'axios';
         const array = response.data.data.map(element => ({
           retailer: element.retailer,
           date: `${new Date(element.date).getFullYear()}-${new Date(element.date).getMonth()}-${new Date(element.date).getDate()}`
-        }))
+        }));
 
         this.receipts = array;
 
-
-
-        console.log(array)
-      }
-      )
-      .catch( () => {
       });
     }
   }

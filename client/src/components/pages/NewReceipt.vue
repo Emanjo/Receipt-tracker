@@ -19,18 +19,21 @@
         <v-flex xs3>
         </v-flex>
         <v-flex xs12 sm9 md9>
-          <h3 class="mt-3">General info</h3>
+          <h3 class="mt-3 mb-3">General info</h3>
         </v-flex>
         <v-flex xs3>
         </v-flex>
 
         <!-- Form row-->
         <v-flex xs12 sm3 md3>
-          <v-text-field
-            label="Retailer"
-            v-model="retailer"
-          ></v-text-field>
+          <combo-box 
+            @onChange="retailerChange" 
+            label="Select a retailer or create a new one" 
+            apiUrl="api/retailers" 
+            placeholder="example: kiwi"
+          ></combo-box>
         </v-flex>
+
         <v-flex xs12 sm3 md3>
           <v-dialog
             ref="dialog"
@@ -64,7 +67,7 @@
       <v-flex xs3>
       </v-flex>
       <v-flex xs6>
-        <h3 class=" mt-3">Items</h3>
+        <h3 class="mt-3 mb-3">Items</h3>
       </v-flex>
       <v-flex xs3>
       </v-flex>
@@ -102,11 +105,13 @@
 
 <script>
   import ItemRow from './../form/ItemRow.vue';
+  import ComboBox from './../form/ComboBox.vue';
   import axios from 'axios';
 
   export default {
     components: {
       ItemRow,
+      ComboBox,
     },
     data() {
       return {
@@ -142,8 +147,8 @@
         if (this.itemRows.length <= 1) {
           //Do nothing
         } else {
-          this.items.splice(-1,1);
-          this.itemRows.splice(-1,1);
+          this.items.pop();
+          this.itemRows.pop();
         }
       },
       updateItems(object, index) {
@@ -152,6 +157,9 @@
       alertClicked() {
         this.success = false;
         this.error = false;
+      },
+      retailerChange(value) {
+        this.retailer = value;
       }
     }
   }
