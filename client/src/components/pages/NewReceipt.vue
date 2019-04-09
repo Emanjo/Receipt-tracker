@@ -1,106 +1,102 @@
 <template>
-  <v-form>
-      <v-layout row wrap>
+  <v-container>
+    <v-layout row>
 
-        <!-- Form row alert box-->
-        <v-flex xs12>
-           <div class="text-xs-center">
-            <v-alert :value="success" type="success" transition="scale-transition" dismissible @click="alertClicked">  Success! Receipt was made. </v-alert>
-            <v-alert :value="error" type="error" transition="scale-transition" dismissible @click="alertClicked">  Something went wrong! Please try again later. </v-alert>
-          </div>
-          </v-flex>
-
-          <!-- Form row-->
-        <v-flex xs12>
-          <h2 class="text-xs-center display-1 font-weight-thin mb-3 mt-3">New receipt</h2>
-        </v-flex>
-
-        <!-- Form row-->
-        <v-flex xs3>
-        </v-flex>
-        <v-flex xs12 sm9 md9>
-          <h3 class="mt-3 mb-3">General info</h3>
-        </v-flex>
-        <v-flex xs3>
-        </v-flex>
-
-        <!-- Form row-->
-        <v-flex xs12 sm3 md3>
-          <combo-box 
-            @onChange="retailerChange" 
-            label="Select a retailer or create a new one" 
-            apiUrl="api/retailers" 
-            placeholder="example: kiwi"
-          ></combo-box>
-        </v-flex>
-
-        <v-flex xs12 sm3 md3>
-          <v-dialog
-            ref="dialog"
-            v-model="modal"
-            :return-value.sync="date"
-            persistent
-            lazy
-            full-width
-            width="290px"
-            >
-          <template v-slot:activator="{ on }">
-            <v-text-field
-              v-model="date"
-              label="Date"
-              prepend-icon="event"
-              readonly
-              v-on="on"
-            ></v-text-field>
-          </template>
-          <v-date-picker v-model="date" scrollable>
-            <v-spacer></v-spacer>
-            <v-btn flat color="primary" @click="modal = false">Cancel</v-btn>
-            <v-btn flat color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
-          </v-date-picker>
-          </v-dialog>
-        </v-flex>
-      <v-flex xs3>
-      </v-flex>
-
-      <!-- Form row-->
-      <v-flex xs3>
-      </v-flex>
-      <v-flex xs6>
-        <h3 class="mt-3 mb-3">Items</h3>
-      </v-flex>
-      <v-flex xs3>
-      </v-flex>
-
-      <!-- Form row-->
-      <v-flex xs3>
-      </v-flex>
-      <v-flex xs12 sm6 md6>
-        <component v-for="(itemRow, index) in itemRows" :is="itemRow" @onChange="updateItems" :index="index" :key="index"></component>
-      </v-flex>
-      <v-flex xs3>
-      </v-flex>
-
-      <!-- Form row-->
       <v-flex xs12>
         <div class="text-xs-center">
-          <v-btn color="success" @click="addItemRow">Add item <v-icon>add</v-icon></v-btn>
-          <v-btn color="error" @click="removeItemRow">Remove item <v-icon>remove</v-icon></v-btn>
-        </div>
+        <v-alert :value="success" type="success" transition="scale-transition" dismissible @click="alertClicked">  Success! Receipt was made. </v-alert>
+        <v-alert :value="error" type="error" transition="scale-transition" dismissible @click="alertClicked">  Something went wrong! Please try again later. </v-alert>
+      </div>
+      </v-flex>
+      
+    </v-layout>
+
+    <v-layout row>
+
+      <v-flex xs12>
+        <h2 class="text-xs-center display-1 font-weight-thin mb-3 mt-3">New receipt</h2>
       </v-flex>
 
-      <!-- Form row-->
-      <v-flex xs3>
-      </v-flex>
-      <v-flex xs12 sm6 md6 pt-5>
-        <div class="text-xs-center">
-          <v-btn color="info" @click="addReceipt"><v-icon>note_add</v-icon> Register receipt</v-btn>
-        </div>
-      </v-flex>
-      <v-flex xs3>
+    </v-layout>
+
+    <v-layout align-center justify-center row>
+      <v-flex xs12 md6 sm6>
+        <v-card>
+          <v-card-text>
+            <v-layout align-center justify-center row wrap>
+
+                <v-flex xs12>
+                  <h3 class="mt-3 mb-3">General info</h3>
+                </v-flex>
+            
+                <v-flex xs12 sm6 md6>
+                  <combo-box 
+                    @onChange="retailerChange" 
+                    label="Select a retailer or create a new one" 
+                    apiUrl="api/retailers" 
+                    placeholder="example: kiwi"
+                  ></combo-box>
+                </v-flex>
+
+                <v-flex xs12 sm6 md6>
+                  <v-dialog
+                    ref="dialog"
+                    v-model="modal"
+                    :return-value.sync="date"
+                    persistent
+                    lazy
+                    full-width
+                    width="290px"
+                    >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field
+                      v-model="date"
+                      label="Date"
+                      prepend-icon="event"
+                      readonly
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker v-model="date" scrollable>
+                    <v-spacer></v-spacer>
+                    <v-btn flat color="primary" @click="modal = false">Cancel</v-btn>
+                    <v-btn flat color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
+                  </v-date-picker>
+                  </v-dialog>
+                </v-flex>
+
+              <v-flex xs12>
+                <h3 class="mt-3 mb-3">Items</h3>
+              </v-flex>
+              
+              <v-flex xs12>
+                <component v-for="(itemRow, index) in itemRows" :is="itemRow" @onChange="updateItems" :index="index" :key="index"></component>
+              </v-flex>
+
+              <v-flex xs12>
+                <div class="text-xs-center">
+                  <v-btn color="success" @click="addItemRow">Add item <v-icon>add</v-icon></v-btn>
+                  <v-btn color="error" @click="removeItemRow">Remove item <v-icon>remove</v-icon></v-btn>
+                </div>
+              </v-flex>
+
+            </v-layout>
+          </v-card-text>
+          <v-card-actions>
+            <v-layout align-center justify-center row>
+
+              <v-flex xs12>
+                <div class="text-xs-center">
+                  <v-btn color="info" @click="addReceipt"><v-icon>note_add</v-icon> Register receipt</v-btn>
+                </div>
+              </v-flex>
+
+            </v-layout>
+          </v-card-actions>
+        </v-card>
       </v-flex>
     </v-layout>
-  </v-form>
+  </v-container>
 </template>
 
 <script>
